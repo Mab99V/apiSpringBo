@@ -1,11 +1,14 @@
 package org.uv.apiSpringBo.dto;
 
 public class RegistroDTO {
-
+        
+       
 	private String nombre;
 	private String username;
 	private String email;
 	private String password;
+
+     
 
 	public String getNombre() {
 		return nombre;

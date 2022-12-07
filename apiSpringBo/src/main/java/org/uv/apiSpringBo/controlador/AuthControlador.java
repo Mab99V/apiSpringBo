@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,7 @@ public class AuthControlador {
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
 	
+        @CrossOrigin(origins = "*")
 	@PostMapping("/iniciarSesion")
 	public ResponseEntity<JWTAuthResonseDTO> authenticateUser(@RequestBody LoginDTO loginDTO){
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsernameOrEmail(), loginDTO.getPassword()));
@@ -60,6 +62,7 @@ public class AuthControlador {
 		return ResponseEntity.ok(new JWTAuthResonseDTO(token));
 	}
 	
+        @CrossOrigin(origins = "*")
 	@PostMapping("/registrar")
 	public ResponseEntity<?> registrarUsuario(@RequestBody RegistroDTO registroDTO){
 		if(usuarioRepositorio.existsByUsername(registroDTO.getUsername())) {
@@ -71,6 +74,8 @@ public class AuthControlador {
 		}
 		
 		Usuario usuario = new Usuario();
+                
+             
 		usuario.setNombre(registroDTO.getNombre());
 		usuario.setUsername(registroDTO.getUsername());
 		usuario.setEmail(registroDTO.getEmail());

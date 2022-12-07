@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,23 +34,26 @@ public class EmpleadosControlador {
     @Autowired
     private EmpleadosServicio empSer;
     
+    @CrossOrigin(origins = "*")
    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<EmpleadosDTO>guardarEmpleado(@Valid @RequestBody EmpleadosDTO empDTO){
         return new ResponseEntity<>(empSer.guardarEmpleados(empDTO),HttpStatus.CREATED);
     }
     
+    @CrossOrigin(origins = "*")
     @GetMapping
     public List<EmpleadosDTO>listarEmpleados(){
         return empSer.obtenerTodos();
     }
-    
+    @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<EmpleadosDTO>obtenerById(@PathVariable(name ="id") long id){
         
         return ResponseEntity.ok(empSer.obtenerById(id));
     }
     
+    @CrossOrigin(origins = "*")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<EmpleadosDTO>actualizarEmpleado(@Valid @RequestBody EmpleadosDTO empDTO, @PathVariable(name ="id") long id){
@@ -57,6 +61,7 @@ public class EmpleadosControlador {
         EmpleadosDTO empResp = empSer.actualizarEmpleado(empDTO, id);
         return new ResponseEntity<>(empResp,HttpStatus.OK);
   }
+    @CrossOrigin(origins = "*")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String>eliminarEmpleado(@PathVariable(name ="id") long id){
