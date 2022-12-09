@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.uv.apiSpringBo.dto.EmpleadosDTO;
 import org.uv.apiSpringBo.servicio.EmpleadosServicio;
@@ -34,7 +35,7 @@ public class EmpleadosControlador {
     @Autowired
     private EmpleadosServicio empSer;
     
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins="*")
    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<EmpleadosDTO>guardarEmpleado(@Valid @RequestBody EmpleadosDTO empDTO){

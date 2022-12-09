@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 
+
 import org.uv.apiSpringBo.seguridad.CustomUserDetailsService;
 import org.uv.apiSpringBo.seguridad.JwtAuthenticationEntryPoint;
 import org.uv.apiSpringBo.seguridad.JwtAuthenticationFilter;
@@ -27,6 +28,8 @@ import org.uv.apiSpringBo.seguridad.JwtAuthenticationFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+        
+        
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 	
@@ -45,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
+		http.cors().and().csrf().disable()
 		    .exceptionHandling()
 		    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 		    .and()
@@ -56,10 +59,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		    .antMatchers("/api/auth/**").permitAll()
 		    .anyRequest()
 		    .authenticated();
+                    
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
-
-
+      
+       
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -70,4 +74,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+    
 }
